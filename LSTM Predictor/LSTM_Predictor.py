@@ -7,7 +7,7 @@ from keras.layers import LSTM
 from keras.layers import Dropout
 from keras.layers import Dense
 
-dataset_train = pd.read_csv('CAD_CNY Historical Data_20230311_20240411.csv')
+dataset_train = pd.read_csv('CAD_CNY Historical Data_20230311_20240311.csv')
 training_set = dataset_train.iloc[:, 1:2].values
 
 sc = MinMaxScaler(feature_range=(0, 1))
@@ -16,7 +16,7 @@ training_set_scaled = sc.fit_transform(training_set)
 X_train = []
 y_train = []
 # Keep in mind always change index of i within range
-for i in range(60, 284):
+for i in range(60, 261):
     X_train.append(training_set_scaled[i - 60:i, 0])
     y_train.append(training_set_scaled[i, 0])
 X_train, y_train = np.array(X_train), np.array(y_train)
