@@ -7,7 +7,7 @@ from keras.layers import LSTM
 from keras.layers import Dropout
 from keras.layers import Dense
 
-dataset_train = pd.read_csv('CAD_CNY Historical Data_20230311_20240311.csv')
+dataset_train = pd.read_csv('CAD_CNY Historical Data_20230316_20240316.csv')
 training_set = dataset_train.iloc[:, 1:2].values
 
 sc = MinMaxScaler(feature_range=(0, 1))
@@ -42,7 +42,7 @@ model.compile(optimizer='adam', loss='mean_squared_error')
 
 model.fit(X_train, y_train, epochs=100, batch_size=4)
 
-dataset_test = pd.read_csv('CAD_CNY Historical Data_20240312_20240412.csv')
+dataset_test = pd.read_csv('CAD_CNY Historical Data_20240317_20240417.csv')
 real_stock_price = dataset_test.iloc[:, 1:2].values
 
 dataset_total = pd.concat((dataset_train['Open'], dataset_test['Open']), axis=0)
@@ -50,7 +50,7 @@ inputs = dataset_total[len(dataset_total) - len(dataset_test) - 60:].values
 inputs = inputs.reshape(-1, 1)
 inputs = sc.transform(inputs)
 X_test = []
-for i in range(60, 85):
+for i in range(60, 84):
     X_test.append(inputs[i - 60:i, 0])
 X_test = np.array(X_test)
 X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
